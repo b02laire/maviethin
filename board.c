@@ -30,9 +30,9 @@ void init_board()
 
     black_pieces = 0;
 }
-int get_piece_at_square(int square){
+int get_piece_at_square(const int square){
     // 1ULL is "1" in an unsigned long long int
-    uint64_t mask = 1ULL << square;
+    const uint64_t mask = 1ULL << square;
 
     if (white_pawns & mask) return 0;
     if (white_knights & mask) return 1;
@@ -53,7 +53,7 @@ int get_piece_at_square(int square){
 
 
 }
-void print_board(Bitboard black_pieces, Bitboard white_pieces)
+void print_board()
 {
     const char *seperator = "+---+---+---+---+---+---+---+---+";
     for (int rank = 7; rank >= 0; rank--)
@@ -73,13 +73,13 @@ void print_board(Bitboard black_pieces, Bitboard white_pieces)
         printf(" %u\n", rank+1);
     }
     printf("%s", seperator);
-    printf("\n%s", "  a   b   c   d   e   f   g   h");
+    printf("\n%s\n", "  a   b   c   d   e   f   g   h");
 }
 
 int main()
 {
     init_board();
-    print_board(black_pieces, white_pieces);
+    print_board();
 
     return 0;
 }
