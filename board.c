@@ -30,26 +30,50 @@ void init_board()
 
     black_pieces = 0;
 }
+int get_piece_at_square(int square){
+    // 1ULL is "1" in an unsigned long long int
+    uint64_t mask = 1ULL << square;
 
+    if (white_pawns & mask) return 0;
+    if (white_knights & mask) return 1;
+    if (white_bishops & mask) return 2;
+    if (white_rooks & mask) return 3;
+    if (white_queen & mask) return 4;
+    if (white_king & mask) return 5;
+
+    if (black_pawns & mask) return 6;
+    if (black_knights & mask) return 7;
+    if (black_bishops & mask) return 8;
+    if (black_rooks & mask) return 9;
+    if (black_queen & mask) return 10;
+    if (black_king & mask) return 11;
+
+    // empty square
+    else return -1;
+
+
+}
 void print_board(Bitboard black_pieces, Bitboard white_pieces)
 {
-    Bitboard all_pieces = black_pieces | white_pieces;
-    for (int rank = 8; rank > 0; rank--)
+    const char *seperator = "+---+---+---+---+---+---+---+---+";
+    for (int rank = 7; rank >= 0; rank--)
     {
+        printf("%s\n|", seperator);
         for (int file = 0; file < 8; file++)
         {
-            const char* files[] = {"a", "b", "c", "d", "e", "f", "g", "h"};
-            printf("%s%u", files[file], rank);
-            if (file == 7)
-            {
-                printf("\n");
-            }
-            else
-            {
-                printf("%s", ", ");
-            }
+            const char* symbols[12] = {
+                "P", "N", "B", "R", "Q", "K",
+                "p", "n", "b", "r", "q", "k"
+            };
+            int piece = get_piece_at_square(rank * 8 + file);
+            char symbol = (piece != -1) ? *symbols[piece] : ' ';
+            printf(" %c |", symbol );
+
         }
+        printf(" %u\n", rank+1);
     }
+    printf("%s", seperator);
+    printf("\n%s", "  a   b   c   d   e   f   g   h");
 }
 
 int main()
