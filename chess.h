@@ -9,6 +9,14 @@ typedef struct {
     int flags; // castling, en passant, etc.
 } Move;
 
+enum flags
+{
+    CASTLING,
+    EN_PASSANT,
+    PROMOTION
+
+};
+
 // Piece movement
 int move_piece(Board* board, int from_square, int to_square);
 int is_valid_move(Board* board, int from_square, int to_square);
